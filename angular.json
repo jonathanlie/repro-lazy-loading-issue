@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lazy-loading-test-angular-a11": {
+    "some-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -13,25 +13,25 @@
           "strict": true
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/some-app",
+      "sourceRoot": "projects/some-app/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/lazy-loading-test-angular-a11",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/some-app",
+            "index": "projects/some-app/src/index.html",
+            "main": "projects/some-app/src/main.ts",
+            "polyfills": "projects/some-app/src/polyfills.ts",
+            "tsConfig": "projects/some-app/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/some-app/src/favicon.ico",
+              "projects/some-app/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/some-app/src/styles.scss"
             ],
             "scripts": []
           },
@@ -39,8 +39,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "projects/some-app/src/environments/environment.ts",
+                  "with": "projects/some-app/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -68,33 +68,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "lazy-loading-test-angular-a11:build"
+            "browserTarget": "some-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "lazy-loading-test-angular-a11:build:production"
+              "browserTarget": "some-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lazy-loading-test-angular-a11:build"
+            "browserTarget": "some-app:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "projects/some-app/src/test.ts",
+            "polyfills": "projects/some-app/src/polyfills.ts",
+            "tsConfig": "projects/some-app/tsconfig.spec.json",
+            "karmaConfig": "projects/some-app/karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/some-app/src/favicon.ico",
+              "projects/some-app/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/some-app/src/styles.scss"
             ],
             "scripts": []
           }
@@ -103,9 +103,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "projects/some-app/tsconfig.app.json",
+              "projects/some-app/tsconfig.spec.json",
+              "projects/some-app/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -115,13 +115,53 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "lazy-loading-test-angular-a11:serve"
+            "protractorConfig": "projects/some-app/e2e/protractor.conf.js",
+            "devServerTarget": "some-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "lazy-loading-test-angular-a11:serve:production"
+              "devServerTarget": "some-app:serve:production"
             }
+          }
+        }
+      }
+    },
+    "some-lib": {
+      "projectType": "library",
+      "root": "projects/some-lib",
+      "sourceRoot": "projects/some-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/some-lib/tsconfig.lib.json",
+            "project": "projects/some-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/some-lib/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/some-lib/src/test.ts",
+            "tsConfig": "projects/some-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/some-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/some-lib/tsconfig.lib.json",
+              "projects/some-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
